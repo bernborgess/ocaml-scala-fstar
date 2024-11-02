@@ -1,2 +1,7 @@
 (library
- (name ocaml))
+ (name ocaml)
+ (modules ocaml))
+
+(library
+ (name extremelybasic)
+ (modules extremelybasic))
