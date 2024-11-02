@@ -1,15 +1,33 @@
 #!/bin/bash
 
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 <filename>"
+  exit 1
+fi
 
-#fstar.exe --codegen OCaml --extract Hello --odir build Hello.fst
-#cd build
-#ocamlfind ocamlc -thread -o hello -package threads Hello.ml
+# Store the provided filename
+FILENAME=$1
 
-#FSTAR_HOME=$(opam var fstar:lib)
-#OCAMLPATH=$FSTAR_HOME/lib ocamlbuild -use-ocamlfind -pkg batteries -pkg fstar.lib Hello.cmxa
+# Check if the file with the given name exists
+if [ ! -f "${FILENAME}.fst" ]; then
+  echo "Error: File '${FILENAME}.fst' not found."
+  exit 1
+fi
 
+# Run fstar with the provided filename
+fstar.exe "${FILENAME}.fst" --codegen OCaml --odir build --extract_module "${FILENAME}"
 
-fstar.exe Hello.fst --codegen OCaml --odir build --extract_module Hello
+# Check if fstar.exe succeeded
+if [ $? -ne 0 ]; then
+  echo "Error: fstar.exe failed to execute successfully."
+  exit 1
+fi
+
 cd build
-OCAMLPATH=~/.opam/default/lib/fstar/ ocamlfind opt -thread -package fstar.lib -package threads -linkpkg Hello.ml -o Hello
-./Hello
+
+# Compile the OCaml code
+OCAMLPATH=~/.opam/default/lib/fstar/ ocamlfind opt -thread -package fstar.lib -package threads -linkpkg "${FILENAME}.ml" -o "${FILENAME}"
+
+# Execute the compiled program
+./"${FILENAME}"
+
