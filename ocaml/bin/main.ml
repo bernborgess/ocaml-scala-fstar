@@ -1,1 +1,1 @@
-let () = Extremelybasic.solve ()
+let () = Areaofacircle.solve ()

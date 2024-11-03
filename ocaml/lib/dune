@@ -5,3 +5,7 @@
 (library
  (name extremelybasic)
  (modules extremelybasic))
+
+(library
+ (name areaofacircle)
+ (modules areaofacircle))

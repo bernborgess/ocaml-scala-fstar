@@ -1,5 +1,6 @@
+import beecrowd.AreaOfACircle
 import beecrowd.ExtremelyBasic
 
 object Main extends App {
-  ExtremelyBasic.solve()
+  AreaOfACircle.solve()
 }
